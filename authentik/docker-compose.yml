@@ -22,14 +22,14 @@ services:
       AUTHENTIK_BOOTSTRAP_TOKEN: ${AUTHENTIK_BOOTSTRAP_TOKEN:-w73e89rf23uioqhezrgd793qgifweurfhgq}
       AUTHENTIK_REDIS__HOST: authentik-redis
       AUTHENTIK_POSTGRESQL__HOST: authentik-postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${POSTGRES_DATABASE:-medlog}
-      AUTHENTIK_POSTGRESQL__NAME: ${POSTGRES_DATABASE:-medlog}
+      AUTHENTIK_POSTGRESQL__USER: ${POSTGRES_DATABASE:-athk}
+      AUTHENTIK_POSTGRESQL__NAME: ${POSTGRES_DATABASE:-athk}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${POSTGRES_PASSWORD:-w789efhweds3rt43wredfwf}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:-CHANGE_ME_FOR_GODS_SAKE_s89dtzfgo42wuhrf083qrhgfewuoasdfghouesdhfkjsd}
       AUTHENTIK_LOG_LEVEL: debug
     volumes:
-      - ./medlog-demo-data/oidc/authentik/media:/media
-      - ./medlog-demo-data/oidc/authentik/custom-templates:/templates
+      - ./athk-demo-data/oidc/authentik/media:/media
+      - ./athk-demo-data/oidc/authentik/custom-templates:/templates
       - ./provisioning/authentik:/blueprints/custom
     ports:
       - 9000:9000
@@ -47,14 +47,14 @@ services:
       AUTHENTIK_BOOTSTRAP_TOKEN: ${AUTHENTIK_BOOTSTRAP_TOKEN:-w73e89rf23uioqhezrgd793qgifweurfhgq}
       AUTHENTIK_REDIS__HOST: authentik-redis
       AUTHENTIK_POSTGRESQL__HOST: authentik-postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${POSTGRES_DATABASE:-medlog}
-      AUTHENTIK_POSTGRESQL__NAME: ${POSTGRES_DATABASE:-medlog}
+      AUTHENTIK_POSTGRESQL__USER: ${POSTGRES_DATABASE:-athk}
+      AUTHENTIK_POSTGRESQL__NAME: ${POSTGRES_DATABASE:-athk}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${POSTGRES_PASSWORD:-w789efhweds3rt43wredfwf}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:-CHANGE_ME_FOR_GODS_SAKE_s89dtzfgo42wuhrf083qrhgfewuoasdfghouesdhfkjsd}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./medlog-demo-data/oidc/authentik/media:/media
-      - ./medlog-demo-data/oidc/authentik/custom-templates:/templates
+      - ./athk-demo-data/oidc/authentik/media:/media
+      - ./athk-demo-data/oidc/authentik/custom-templates:/templates
       - ./provisioning/authentik:/blueprints/custom
     networks:
       authentik-net:
@@ -64,16 +64,16 @@ services:
     image: docker.io/library/postgres:12-alpine
     restart: unless-stopped
     healthcheck:
-      test: "pg_isready -h localhost -p 5432 -q -U ${POSTGRES_DATABASE:-medlog}"
+      test: "pg_isready -h localhost -p 5432 -q -U ${POSTGRES_DATABASE:-athk}"
       interval: 5s
       timeout: 5s
       retries: 5
     volumes:
-      - ./medlog-demo-data/oidc/db:/var/lib/postgresql/data
+      - ./athk-demo-data/oidc/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-w789efhweds3rt43wredfwf}
-      - POSTGRES_USER=${POSTGRES_DATABASE:-medlog}
-      - POSTGRES_DB=${POSTGRES_DATABASE:-medlog}
+      - POSTGRES_USER=${POSTGRES_DATABASE:-athk}
+      - POSTGRES_DB=${POSTGRES_DATABASE:-athk}
     networks:
       authentik-net:
         ipv4_address: 172.25.0.14
@@ -83,7 +83,7 @@ services:
     command: --save 60 1 --loglevel warning
     restart: unless-stopped
     volumes:
-      - ./medlog-demo-data/oidc/cache:/data
+      - ./athk-demo-data/oidc/cache:/data
     networks:
       authentik-net:
         ipv4_address: 172.25.0.15
