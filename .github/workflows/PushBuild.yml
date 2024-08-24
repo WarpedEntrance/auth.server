@@ -11,7 +11,7 @@ build:
 runs-on: ubuntu-latest
 env:
 PG_PASS: ${{ secrets.PG_PASS }}
-AUTHENTIK_SECRET_KEY: ${{ secrets.PG_PASS }}
+AUTHENTIK_SECRET_KEY: ${{ secrets.AUTHENTIK_SECRET_KEY }}
 
 
 steps:
