@@ -3,7 +3,7 @@ name: Build Docker Images with Docker Compose
 on:
   push:
     branches:
-      - main  # or the branch you want to trigger the build on
+      - main
   pull_request:
     branches:
       - main
@@ -22,5 +22,8 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
+      - name: List files
+        run: ls -R
+
       - name: Build Docker images
-        run: docker compose -f docker-compose.yaml build
+        run: docker compose -f docker/docker-compose.yaml build
